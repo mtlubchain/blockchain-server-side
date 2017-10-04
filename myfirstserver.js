@@ -15,7 +15,23 @@ arr.push(tempBlock1);
 
 
 const app = express();
-app.get('/',function(req, res) {
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);    
+    if (req.method === 'OPTIONS') {
+        res.writeHead(200);
+        res.end();
+        return;
+    }
+    
+    next();
+});
+
+
+app.get('/blockchain',function(req, res) {
     res.setHeader('Content-type', 'application/json');
     res.json(arr);
 });
