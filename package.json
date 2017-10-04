@@ -1,0 +1,15 @@
+{
+  "name": "naivechain",
+  "version": "1.0.0",
+  "description": "my first blockchain app",
+  "scripts": {
+    "start": "nodemon myfirstserver.js"
+  },
+  "dependencies": {
+    "express": "~4.11.1",
+    "nodemon": "^1.12.1"
+  },
+  "engines": {
+    "node": ">=4.3.2"
+  }
+}
