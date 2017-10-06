@@ -27,7 +27,7 @@ class Chain {
 
     addBlock(newBlock) {
         if (this.isValidNewBlock(newBlock, this.getLatestBlock())) {
-            blockchain.push(newBlock);
+            this.blockchain.push(newBlock);
         }
     }
 
@@ -38,9 +38,9 @@ class Chain {
         } else if (previousBlock.hash !== newBlock.previousHash) {
             console.log('invalid previoushash');
             return false;
-        } else if (calculateHashForBlock(newBlock) !== newBlock.hash) {
-            console.log(typeof (newBlock.hash) + ' ' + typeof calculateHashForBlock(newBlock));
-            console.log('invalid hash: ' + calculateHashForBlock(newBlock) + ' ' + newBlock.hash);
+        } else if (this.calculateHashForBlock(newBlock) !== newBlock.hash) {
+            console.log(typeof (newBlock.hash) + ' ' + typeof this.calculateHashForBlock(newBlock));
+            console.log('invalid hash: ' + this.calculateHashForBlock(newBlock) + ' ' + newBlock.hash);
             return false;
         }
         return true;

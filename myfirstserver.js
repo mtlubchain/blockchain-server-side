@@ -33,16 +33,10 @@ app.get('/blockchain', (req, res) => {
 app.post('/mineBlock', (req, res) => {
     console.log(req.body);
     let newBlock = blockchain.generateNextBlock(req.body);
-    res.send(newBlock);
+    blockchain.addBlock(newBlock);
+    console.log(newBlock);
+    res.send(blockchain);
 });
-
-    // app.post('/mineBlock', (req, res) => {
-//     var newBlock = generateNextBlock(req.body.data);
-//     addBlock(newBlock);
-//     broadcast(responseLatestMsg());
-//     console.log('block added: ' + JSON.stringify(newBlock));
-//     res.send();
-// });
 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
