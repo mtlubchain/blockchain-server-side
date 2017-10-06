@@ -1,20 +1,14 @@
-const Block = require('./block.js');
 const express = require('express');
+const bodyParser = require('body-parser');
 
-
-// let tempBlock0 = new Block(0,'dupa0', 'dzisiaj','oto moje dane','smaz hasz');
-// let tempBlock1 = new Block(0,'dupa1', 'wczoraj','oto moje dane','smaz hasz');
-
-
-let tempBlock0 = new Block(0,"dupa0","dzisiaj","oto moje dane","smaz hasz");
-let tempBlock1 = new Block(1,"dupa1","wczoraj","oto moje dane","smaz hasz");
-
-const arr = [];
-arr.push(tempBlock0);
-arr.push(tempBlock1);
-
+const Block = require('./block.js');
+const Chain = require('./chain');
 
 const app = express();
+
+app.use(bodyParser.json());
+
+const blockchain = new Chain();
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -26,20 +20,34 @@ app.use((req, res, next) => {
         res.end();
         return;
     }
-    
     next();
 });
 
 
-app.get('/blockchain',function(req, res) {
+app.get('/blockchain', (req, res) => {
     res.setHeader('Content-type', 'application/json');
-    res.json(arr);
+    res.json(blockchain);
+    
 });
-// TUTORIAL how to use params
-app.get('/users/:userId/token/:key', (req, res) => {
-    res.send(req.params);
+
+app.post('/mineBlock', (req, res) => {
+    console.log(req.body);
+    let newBlock = blockchain.generateNextBlock(req.body);
+    res.send(newBlock);
 });
+
+    // app.post('/mineBlock', (req, res) => {
+//     var newBlock = generateNextBlock(req.body.data);
+//     addBlock(newBlock);
+//     broadcast(responseLatestMsg());
+//     console.log('block added: ' + JSON.stringify(newBlock));
+//     res.send();
+// });
 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
   });
+
+      // source.stream().filter(x -> x.id > 5).filter(x -> x.name == "Mateusz").collect(Collectors.toList());
+    // List<Block> list = Arrays.newArrayList();
+    // lista.stream().map(this::parseTOX).collect(Collectors.toList());
